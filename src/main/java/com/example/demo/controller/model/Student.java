@@ -14,7 +14,7 @@ import javax.persistence.JoinColumn;
 import com.example.demo.controller.model.Course;
 
 @Entity
-@Table(name = "student")
+@Table(name = "student_one")
 public class Student {
 
   @Id
@@ -25,8 +25,7 @@ public class Student {
   private String name;
 
   @OneToOne(cascade = CascadeType.ALL)
-  @JoinTable(name = "std_course", joinColumns = {@JoinColumn(name = "students_id", referencedColumnName = "id")},
-  inverseJoinColumns = {@JoinColumn(name = "courses_id", referencedColumnName = "id")})
+   @JoinColumn(name = "course_one_id")
   private Course course;
 
   public Student() {

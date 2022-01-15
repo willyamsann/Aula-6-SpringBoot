@@ -37,13 +37,54 @@ public class StudentController {
 		try {
 			List<Student> student = new ArrayList<Student>();
 
-		  studentRepository.findAll().forEach(student::add);
-
-			return new ResponseEntity<>(student, HttpStatus.OK);
+			return new ResponseEntity<>( studentRepository.findAll(), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-  
+		@GetMapping("/students/{id}")
+		public ResponseEntity<Student> getStudentById(@PathVariable("id") long id) {
+			Optional<Student> studentData = studentRepository.findById(id);
+
+			if (studentData.isPresent()) {
+				return new ResponseEntity<>(studentData.get(), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+	}
+
+		@DeleteMapping("/students/{id}")
+		public ResponseEntity<HttpStatus> deleteTutorial(@PathVariable("id") long id) {
+			try {
+				studentRepository.deleteById(id);
+				return new ResponseEntity<>(HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+
+		@PostMapping("/students")
+		public ResponseEntity<Student> createStudent(@RequestBody Student student) {
+			try {
+				Student _student = studentRepository
+						.save(new Student(student.getName()));
+				return new ResponseEntity<>(_student, HttpStatus.CREATED);
+			} catch (Exception e) {
+				return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+
+			@PutMapping("/students/{id}")
+			public ResponseEntity<Student> updateStudent(@PathVariable("id") long id, @RequestBody Student student) {
+				Optional<Student> studentData = studentRepository.findById(id);
+
+				if (studentData.isPresent()) {
+					Student _student = studentData.get();
+					_student.setName(student.getName());
+					return new ResponseEntity<>(studentRepository.save(_student), HttpStatus.OK);
+				} else {
+					return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+				}
+			}
 }

@@ -10,7 +10,7 @@ import javax.persistence.OneToOne;
 
 
 @Entity
-@Table(name = "Courses")
+@Table(name = "course_one")
 public class Course {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,9 +18,6 @@ public class Course {
 
   @Column(name = "name")
   private String name;
-
-  @OneToOne(mappedBy = "course")
-  private Student student;
 
   public Course() {
 
@@ -42,11 +39,4 @@ public class Course {
     this.name = name;
   }
   
-   public Student getStudent() {
-    return student;
- }
-
-  public void setStudent(Student student) {
-      this.student = student;
-  }
 }
