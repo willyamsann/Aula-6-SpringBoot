@@ -8,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.OneToOne;
 
-import com.example.demo.controller.model.Student;
-
 
 @Entity
 @Table(name = "Courses")
@@ -21,7 +19,7 @@ public class Course {
   @Column(name = "name")
   private String name;
 
-  @OneToOne(mappedBy = "Courses")
+  @OneToOne(mappedBy = "course")
   private Student student;
 
   public Course() {
